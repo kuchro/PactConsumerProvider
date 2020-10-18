@@ -1,5 +1,6 @@
 package core.consumer.test;
 
+import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.consumer.junit.PactProviderRule;
@@ -32,11 +33,11 @@ public class TransactionConsumerTest {
 
     @Rule
     public PactProviderRule mockProvider = new PactProviderRule("transaction_provider",
-                                                            "127.0.0.1",8080, this);
+                                                            "127.0.0.1",8081, this);
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    @Pact(provider="transaction_provider",consumer="transaction_consumer")
+    @Pact(provider="transaction_provider",consumer="transaction_consumer_post")
     public RequestResponsePact createTransactionPact(PactDslWithProvider builder){
         System.setProperty("pact.rootDir","..\\pacts");
         Map<String, String> headers = new HashMap<>();
@@ -65,6 +66,7 @@ public class TransactionConsumerTest {
                 .body(bodyResponse).toPact();
     }
 
+
     @Test
     @PactVerification
     public void testCreateTransactionConsumer(){
@@ -81,4 +83,6 @@ public class TransactionConsumerTest {
 
 
     }
+
+
  }

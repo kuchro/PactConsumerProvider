@@ -8,4 +8,5 @@
  */
 
 rootProject.name = 'PactContractProject'
-include('ContractConsumer','PactProvider')
+include('ContractConsumer','PactProvider','TestsVerification')
+
