@@ -1,0 +1,66 @@
+{
+  "provider": {
+    "name": "transaction_provider"
+  },
+  "consumer": {
+    "name": "transaction_consumer_get"
+  },
+  "interactions": [
+    {
+      "description": "a example of get transaction",
+      "request": {
+        "method": "GET",
+        "path": "/v1/provider/transaction/1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "amount": 20,
+          "receiver": "Bank A",
+          "sender": "Bank B",
+          "currency": "PLN",
+          "transactionId": "1"
+        },
+        "matchingRules": {
+          "body": {
+            "$.amount": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "get transaction"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.0.10"
+    }
+  }
+}

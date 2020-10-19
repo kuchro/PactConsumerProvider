@@ -1,0 +1,62 @@
+{
+  "provider": {
+    "name": "transaction_provider"
+  },
+  "consumer": {
+    "name": "transaction_consumer_post"
+  },
+  "interactions": [
+    {
+      "description": "a example of transaction",
+      "request": {
+        "method": "POST",
+        "path": "/v1/provider/transaction",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "amount": 34560,
+          "receiver": "XSD1234",
+          "sender": "XSD3214",
+          "currency": "EUR",
+          "transactionId": "12345"
+        },
+        "matchingRules": {
+          "body": {
+            "$.amount": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "message": "Transaction received.",
+          "status": "TRANSACTION_SUCCESS"
+        }
+      },
+      "providerStates": [
+        {
+          "name": "execute transaction"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.0.10"
+    }
+  }
+}

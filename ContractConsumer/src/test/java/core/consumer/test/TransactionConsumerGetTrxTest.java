@@ -8,11 +8,11 @@ import au.com.dius.pact.consumer.junit.PactVerification;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import com.jayway.jsonpath.JsonPath;
-import core.Application;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,9 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
 public class TransactionConsumerGetTrxTest{
-
 
     @Rule
     public PactProviderRule mockProvider = new PactProviderRule("transaction_provider",
@@ -53,7 +51,6 @@ public class TransactionConsumerGetTrxTest{
                 .body(bodyResponse).toPact();
     }
 
-
     @Test
     @PactVerification
     public void testGETTransactionConsumer(){
@@ -64,7 +61,5 @@ public class TransactionConsumerGetTrxTest{
                 restTemplate.getForEntity(mockProvider.getUrl()+"/v1/provider/transaction/1", String.class);
         assertEquals("1", JsonPath.read(responseEntity.getBody(),"$.transactionId"));
         assertEquals("Bank A", JsonPath.read(responseEntity.getBody(),"$.receiver"));
-
-
     }
 }

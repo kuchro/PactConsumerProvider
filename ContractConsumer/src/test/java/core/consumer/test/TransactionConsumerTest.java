@@ -1,6 +1,5 @@
 package core.consumer.test;
 
-import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.consumer.junit.PactProviderRule;
@@ -8,12 +7,10 @@ import au.com.dius.pact.consumer.junit.PactVerification;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import com.jayway.jsonpath.JsonPath;
-import core.Application;
 import model.Transaction;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -28,7 +25,6 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
 public class TransactionConsumerTest {
 
     @Rule
@@ -80,9 +76,6 @@ public class TransactionConsumerTest {
                 restTemplate.postForEntity(mockProvider.getUrl()+"/v1/provider/transaction", request, String.class);
         assertEquals("TRANSACTION_SUCCESS", JsonPath.read(responseEntity.getBody(),"$.status"));
         assertEquals("Transaction received.", JsonPath.read(responseEntity.getBody(),"$.message"));
-
-
     }
-
 
  }

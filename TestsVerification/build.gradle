@@ -13,3 +13,7 @@ dependencies {
     compile group: 'au.com.dius', name: 'pact-jvm-provider-junit', version: '4.0.10'
     compile group: 'au.com.dius', name: 'pact-jvm-provider-spring', version: '4.0.10'
 }
+
+test{
+
+}

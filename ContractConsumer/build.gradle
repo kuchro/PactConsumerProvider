@@ -18,7 +18,7 @@ plugins{
 sourceSets {
     main {
         java {
-            srcDirs = ['src/java']
+            srcDirs = ['src/main']
         }
     }
     test {
@@ -39,10 +39,7 @@ pact {
     publish {
         def path =  "${project.projectDir}/.."
         pactDirectory = path+'/pacts/' // defaults to $buildDir/pacts
-        pactBrokerUrl = 'http://localhost:80'
+        pactBrokerUrl = 'http://localhost:89'
     }
-
-}
-test {
 
 }
