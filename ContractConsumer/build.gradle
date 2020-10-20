@@ -34,12 +34,11 @@ dependencies {
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.2.RELEASE'
     compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'
 }
-pact {
 
+pact {
     publish {
         def path =  "${project.projectDir}/.."
         pactDirectory = path+'/pacts/' // defaults to $buildDir/pacts
-        pactBrokerUrl = 'http://localhost:89'
+        pactBrokerUrl = 'http://host.docker.internal:88'
     }
-
 }

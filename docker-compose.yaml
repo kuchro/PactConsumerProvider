@@ -1,19 +1,23 @@
 version: '3.7'
 
 services:
-  provider-new:
+  provider:
     build:
       context: '.'
       dockerfile: 'Dockerfile'
+    ports:
+    - "8081:8081"
+    depends_on:
+      - "postgresdb"
+
   postgresdb:
-    image: library/postgres:9.5
     build:
       context: ./db
       dockerfile: Dockerfile
     expose:
       - "5432"
     volumes:
-      - ./db/data:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     environment:
       POSTGRES_DB: 'postgresdb'
       POSTGRES_USER: 'admin'
@@ -21,10 +25,9 @@ services:
       PACTBROKER_USER_PASSWORD: 'password'
       PGDATA: '/var/lib/postgresql/data/pgdata'
     restart: 'always'
+
   pactbroker:
     image: dius/pact-broker
-    links:
-      - "postgresdb:postgresdb"
     environment:
       PACT_BROKER_DATABASE_PASSWORD: 'password'
       PACT_BROKER_DATABASE_USERNAME: 'pactbrokeruser'
@@ -33,3 +36,4 @@ services:
     ports:
       - "88:80"
     restart: 'always'
+
