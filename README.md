@@ -1,3 +1,7 @@
+Prerequisites
+* Docker Engine > 19.x
+* JDK 14
+
 * Run ./gradlew 3_SUT:build jar
 * Run docker-compose up -d --force-recreate
 * Pact Broker will be available - http://localhost:4699
