@@ -12,22 +12,19 @@ import org.junit.runner.RunWith;
 
 @RunWith(PactRunner.class)
 //@PactFolder("..\\pacts")
-@PactBroker(host = "host.docker.internal",port = "88")
+@PactBroker(host = "localhost", port = "4699")
 @Provider("transaction_provider")
 public class TransactionProviderTest {
 
-
-
     @TestTarget
-    public final Target target = new HttpTarget("host.docker.internal",8081);
+    public final Target target = new HttpTarget("localhost", 4698);
 
     @State(value = "execute transaction")
-    public void executeTransaction(){
-
+    public void executeTransaction() {
     }
-    @State(value = "get transaction")
-    public void getTransaction(){
 
+    @State(value = "get transaction")
+    public void getTransaction() {
     }
 
 }

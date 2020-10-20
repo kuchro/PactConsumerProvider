@@ -1,9 +1,10 @@
-FROM openjdk:13.0.2
-RUN mkdir -p /app/source
-COPY . /app/source
-WORKDIR /app/source
-RUN ./gradlew PactProvider:build jar
-COPY /app/source/PactProvider/build/libs/PactProvider.jar /app/provider.jar
-EXPOSE 8081
-ENTRYPOINT ["java","-jar","/app/provider.jar"]
+FROM openjdk:14-alpine
 
+ENV HOME /app/source
+
+RUN mkdir -p $HOME
+
+COPY ./3_SUT/build/libs/3_SUT.jar $HOME/provider.jar
+
+EXPOSE 8081
+ENTRYPOINT ["java", "-jar", "/app/source/provider.jar"]
