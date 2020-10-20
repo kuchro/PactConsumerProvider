@@ -8,11 +8,11 @@ buildscript {
         classpath "gradle.plugin.au.com.dius.pact.provider:gradle:4.1.6"
     }
 }
+
 plugins{
     id 'java'
     id 'application'
     id "au.com.dius.pact" version "4.1.6"
-
 }
 
 sourceSets {
@@ -39,6 +39,6 @@ pact {
     publish {
         def path =  "${project.projectDir}/.."
         pactDirectory = path+'/pacts/' // defaults to $buildDir/pacts
-        pactBrokerUrl = 'http://host.docker.internal:88'
+        pactBrokerUrl = 'http://localhost:4699'
     }
 }

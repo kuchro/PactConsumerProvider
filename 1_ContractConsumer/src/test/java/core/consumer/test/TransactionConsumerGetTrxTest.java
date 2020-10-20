@@ -26,7 +26,7 @@ public class TransactionConsumerGetTrxTest{
 
     @Rule
     public PactProviderRule mockProvider = new PactProviderRule("transaction_provider",
-            "127.0.0.1",8081, this);
+            "127.0.0.1",4698, this);
 
     private RestTemplate restTemplate = new RestTemplate();
 

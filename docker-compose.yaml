@@ -3,10 +3,10 @@ version: '3.7'
 services:
   provider:
     build:
-      context: '.'
-      dockerfile: 'Dockerfile'
+      context: .
+      dockerfile: Dockerfile
     ports:
-    - "8081:8081"
+    - "4698:8081"
     depends_on:
       - "postgresdb"
 
@@ -34,6 +34,5 @@ services:
       PACT_BROKER_DATABASE_HOST: 'postgresdb'
       PACT_BROKER_DATABASE_NAME: 'pactbroker'
     ports:
-      - "88:80"
+      - "4699:80"
     restart: 'always'
-
