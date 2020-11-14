@@ -10,12 +10,10 @@ import com.jayway.jsonpath.JsonPath;
 import model.Transaction;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,12 +22,10 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
-public class TransactionConsumerTest {
-
+public class TrxConsumerTest {
     @Rule
     public PactProviderRule mockProvider = new PactProviderRule("transaction_provider",
-                                                            "127.0.0.1",8081, this);
+            "127.0.0.1",8081, this);
 
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -41,17 +37,17 @@ public class TransactionConsumerTest {
 
 
         PactDslJsonBody bodyRequest = new PactDslJsonBody()
-                .stringValue("transactionId","12345")
-                .stringValue("receiver","XSD1234")
-                .stringValue("sender","XSD3214")
-                .integerType("amount",34560)
-                .stringValue("currency","EUR");
+                .integerType("transactionId",1)
+                .stringValue("receiver","BLM1235453242")
+                .stringValue("sender","NBP12435342")
+                .integerType("amount",1)
+                .stringValue("currency","PLN");
         PactDslJsonBody bodyResponse = new PactDslJsonBody()
                 .stringValue("status","TRANSACTION_SUCCESS")
                 .stringValue("message","Transaction received.");
 
-        return builder.given("execute transaction")
-                .uponReceiving("a example of transaction")
+        return builder.given("execute trx")
+                .uponReceiving("a example of POST transaction")
                 .path("/v1/provider/transaction")
                 .body(bodyRequest)
                 .headers(headers)
@@ -66,8 +62,8 @@ public class TransactionConsumerTest {
     @Test
     @PactVerification
     public void testCreateTransactionConsumer(){
-        Transaction transaction = new Transaction("12345","XSD1234","XSD3214",
-                                                      34560,"EUR");
+        Transaction transaction = new Transaction(1L,"BLM1235453242","NBP12435342",
+                1,"PLN");
         HttpHeaders headers=new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> request=new HttpEntity<Object>(transaction, headers);
@@ -77,5 +73,4 @@ public class TransactionConsumerTest {
         assertEquals("TRANSACTION_SUCCESS", JsonPath.read(responseEntity.getBody(),"$.status"));
         assertEquals("Transaction received.", JsonPath.read(responseEntity.getBody(),"$.message"));
     }
-
- }
+}

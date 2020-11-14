@@ -39,6 +39,6 @@ pact {
     publish {
         def path =  "${project.projectDir}/.."
         pactDirectory = path+'/pacts/' // defaults to $buildDir/pacts
-        pactBrokerUrl = 'http://host.docker.internal:88'
+        pactBrokerUrl = 'http://localhost:88'
     }
 }

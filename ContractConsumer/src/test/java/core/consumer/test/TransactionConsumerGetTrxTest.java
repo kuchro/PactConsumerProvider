@@ -8,22 +8,18 @@ import au.com.dius.pact.consumer.junit.PactVerification;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import com.jayway.jsonpath.JsonPath;
-
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
 public class TransactionConsumerGetTrxTest{
 
+    //as a mock server we can use also WireMock
     @Rule
     public PactProviderRule mockProvider = new PactProviderRule("transaction_provider",
             "127.0.0.1",8081, this);
@@ -36,10 +32,10 @@ public class TransactionConsumerGetTrxTest{
 
 
         DslPart bodyResponse = new PactDslJsonBody()
-                .stringValue("transactionId","1")
-                .stringValue("receiver","Bank A")
-                .stringValue("sender","Bank B")
-                .integerType("amount",20)
+                .integerType("transactionId",1)
+                .stringValue("receiver","BLM1235453242")
+                .stringValue("sender","NBP12435342")
+                .integerType("amount",1)
                 .stringValue("currency","PLN");
 
         return builder.given("get transaction")
@@ -48,7 +44,13 @@ public class TransactionConsumerGetTrxTest{
                 .method(RequestMethod.GET.name())
                 .willRespondWith()
                 .status(200)
-                .body(bodyResponse).toPact();
+                .body(bodyResponse).given("get transaction2")
+                .uponReceiving("a example of get transaction")
+                .path("/v1/provider/transaction/null")
+                .method(RequestMethod.GET.name())
+                .willRespondWith()
+                .status(400)
+                .body("null").toPact();
     }
 
     @Test
@@ -59,7 +61,6 @@ public class TransactionConsumerGetTrxTest{
         System.out.println("Provider URL"+mockProvider.getUrl());
         ResponseEntity<String> responseEntity=
                 restTemplate.getForEntity(mockProvider.getUrl()+"/v1/provider/transaction/1", String.class);
-        assertEquals("1", JsonPath.read(responseEntity.getBody(),"$.transactionId"));
-        assertEquals("Bank A", JsonPath.read(responseEntity.getBody(),"$.receiver"));
+        assertEquals("BLM1235453242", JsonPath.read(responseEntity.getBody(),"$.receiver"));
     }
 }

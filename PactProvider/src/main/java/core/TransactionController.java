@@ -2,13 +2,14 @@ package core;
 
 import core.model.Status;
 import core.model.Transaction;
+import core.model.TransactionDetails;
 import core.service.TransactionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.NoSuchElementException;
+import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -20,16 +21,20 @@ public class TransactionController {
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
+    @GetMapping("/provider/transaction/history")
+    public List<TransactionDetails> getTransactionHistory(){
+        return transactionService.getTransactionHistory();
+    }
 
     @PostMapping("/provider/transaction")
-    public Status executeTransaction(@RequestBody Transaction transaction){
+    public Status executeTransaction(@RequestBody @Valid Transaction transaction){
         return transactionService.executeTransaction(transaction);
     }
 
     @GetMapping("/provider/transaction/{transactionId}")
-    public Optional<Transaction> provideTransaction(@PathVariable String transactionId){
-        return Optional.ofNullable(Optional.ofNullable(transactionService.getTransaction(transactionId))
+    public Transaction provideTransaction(@PathVariable Long transactionId){
+        return Optional.ofNullable(transactionService.getTransaction(transactionId))
                 .orElseThrow(()->  new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Transaction not found")));
+                HttpStatus.NOT_FOUND, "Transaction not found"));
     }
 }

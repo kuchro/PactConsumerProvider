@@ -1,26 +1,30 @@
 package core.model;
 
 
+import javax.validation.constraints.NotNull;
+import java.util.concurrent.atomic.AtomicLong;
+
 public class Transaction {
-    private String transactionId;
+    @NotNull
+    private Long transactionId;
     private String receiver;
     private String sender;
     private Integer amount;
     private String currency;
 
-    public String getTransactionId() {
-        return transactionId;
-    }
 
-    public Transaction(String transactionId, String receiver, String sender, int amount, String currency) {
-        this.transactionId = transactionId;
+
+    public Transaction(String receiver, String sender, int amount, String currency) {
         this.receiver = receiver;
         this.sender = sender;
         this.amount = amount;
         this.currency = currency;
     }
+    public Long getTransactionId() {
+        return transactionId;
+    }
 
-    public void setTransactionId(String transactionId) {
+    public void setTransactionId(Long transactionId) {
         this.transactionId = transactionId;
     }
 
