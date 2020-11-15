@@ -1,25 +1,28 @@
 package model;
 
 public class Transaction {
-    private String transactionId;
+    private Long transactionId;
     private String receiver;
     private String sender;
     private Integer amount;
     private String currency;
 
-    public String getTransactionId() {
-        return transactionId;
-    }
 
-    public Transaction(String transactionId, String receiver, String sender, int amount, String currency) {
-        this.transactionId = transactionId;
+
+    public Transaction(Long transactionId, String receiver, String sender, int amount, String currency) {
+        this.transactionId=transactionId;
         this.receiver = receiver;
         this.sender = sender;
         this.amount = amount;
         this.currency = currency;
     }
 
-    public void setTransactionId(String transactionId) {
+
+    public Long getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(Long transactionId) {
         this.transactionId = transactionId;
     }
 

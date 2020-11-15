@@ -26,6 +26,7 @@ jar {
 }
 
 dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.5.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.3.2.RELEASE', ext: 'pom'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.3.2.RELEASE'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.2.RELEASE'

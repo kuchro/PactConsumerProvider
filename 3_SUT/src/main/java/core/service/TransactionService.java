@@ -2,27 +2,35 @@ package core.service;
 
 import core.model.Status;
 import core.model.Transaction;
+import core.model.TransactionDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class TransactionService {
 
-    private List<Transaction> transactions = new ArrayList<Transaction>(){
-        {
-            add(new Transaction("1","Bank A","Bank B",20,"PLN"));
-            add(new Transaction("2","Bank B","Bank A",25,"PLN"));
-        }
-    };
+    private AtomicLong atomicLong = new AtomicLong(1);
+
+    private List<TransactionDetails> trxHistory = new ArrayList<>();
+
     public Status executeTransaction(Transaction transaction){
-        return new Status("TRANSACTION_SUCCESS","Transaction received.");
+        long id = atomicLong.getAndIncrement();
+        transaction.setTransactionId(id);
+        Status status = new Status("TRANSACTION_SUCCESS","Transaction received.");
+        trxHistory.add(new TransactionDetails(id,transaction,status));
+        return status;
     }
 
-    public Transaction getTransaction(String transactionId) {
-        return transactions.stream().filter(trx-> trx.getTransactionId().equals(transactionId))
-                .findFirst().orElse(null);
+    public Transaction getTransaction(Long transactionId) {
+        return trxHistory.stream().filter(trx-> trx.getTransaction().getTransactionId().equals(transactionId))
+                .findFirst().map(TransactionDetails::getTransaction).orElse(null);
+    }
+
+    public List<TransactionDetails> getTransactionHistory(){
+        return trxHistory;
     }
 }

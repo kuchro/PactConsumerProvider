@@ -13,23 +13,13 @@ import org.junit.runner.RunWith;
 @RunWith(PactRunner.class)
 //@PactFolder("..\\pacts")
 @PactBroker(host = "localhost",port = "88")
-@Provider("transaction_provider")
-public class TransactionProviderTest {
-
-
-
+@Provider("transaction_negative")
+public class TransactionProviderNegativeTest {
     @TestTarget
     public final Target target = new HttpTarget("localhost",8081);
 
-    @State(value = "execute trx")
-    public void executeTransaction(){
-
+    @State(value = "get trasnaction which not exist")
+    public void getTransactionWhichNotExist(){
+git
     }
-    @State(value = "get transaction")
-    public void getTransaction(){
-
-    }
-
-
-
 }
