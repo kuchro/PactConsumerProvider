@@ -1,7 +1,5 @@
 package model;
 
-
-
 public class Transaction {
     private Long transactionId;
     private String receiver;

@@ -2,5 +2,4 @@ allprojects {
     repositories {
         jcenter()
     }
-
 }
